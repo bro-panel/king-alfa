@@ -1,12 +1,12 @@
 {
-  "name": "SENU-MD",
+  "name": "shagee",
   "version": "4.5.0",
-  "description": "A WhatsApp Bot Created By JESTER",
+  "description": "A WhatsApp Bot Created By shagee",
   "main": "index.js",
   "scripts": {
-    "start": "pm2 start index.js --deep-monitoring --attach --name SENU-MD",
-    "stop": "pm2 stop SENU-MD",
-    "restart": "pm2 restart SENU-MD"
+    "start": "pm2 start index.js --deep-monitoring --attach --name S-MD",
+    "stop": "pm2 stop S-MD",
+    "restart": "pm2 restart S-MD"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "npm:baileys-pro@latest",
