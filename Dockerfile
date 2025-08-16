@@ -1,19 +1,26 @@
-FROM node:lts-buster
+# Use newer Debian base (Bullseye)
+FROM node:lts-bullseye
 
+# Install required packages
 RUN apt-get update && \
-  apt-get install -y \
-  ffmpeg \
-  imagemagick \
-  webp && \
-  apt-get upgrade -y && \
-  rm -rf /var/lib/apt/lists/*
+    apt-get install -y \
+    ffmpeg \
+    imagemagick \
+    webp && \
+    rm -rf /var/lib/apt/lists/*
 
+# Set working directory
+WORKDIR /usr/src/app
+
+# Copy package.json and install dependencies
 COPY package.json .
+RUN npm install && npm install -g qrcode-terminal pm2
 
-RUN npm install
-
+# Copy source code
 COPY . .
 
-EXPOSE 8000
+# Expose port
+EXPOSE 5000
 
-CMD ["node", "main.js"]
+# Start app
+CMD ["npm", "start"]
