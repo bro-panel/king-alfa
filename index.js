@@ -128,7 +128,10 @@ const port = process.env.PORT || 9090;
 │    https://github.com/bro-panel/SHAGEE-MD-V2.0
 ╰─🚀 *ＳＨAG EＥ 🌑⚡ | ⛚ Sʜᴀɢᴇᴇ   BᴏᴛＺｚ ᴢ  ᴛᴇᴄʜ*`;
 
-    conn.sendMessage(94766518242@s.whatsapp.net,{ image: { url: `https://i.ibb.co/39kWRqJs/320.jpg` }, caption: up })
+conn.sendMessage("94766518242@s.whatsapp.net", { 
+  image: { url: "https://i.ibb.co/39kWRqJs/320.jpg" }, 
+  caption: "up" 
+})
   }
   })
   conn.ev.on('creds.update', saveCreds)
