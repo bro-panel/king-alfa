@@ -5,7 +5,7 @@ function convertToBool(text, fault = 'true') {
     return text === fault ? true : false;
 }
 module.exports = {
-SESSION_ID: process.env.SESSION_ID || "IK~7N03EApA#L9OUfOYLt9GoKU_3fV734ljBaQbuEk0G0dmzpZ02pss",
+SESSION_ID: process.env.SESSION_ID || "lite~RMAXCA5S#TfPgjcqCaCkk70xopsyyJ7cv8L31qfI-PURpHR-ZYfE",
 // add your Session Id 
 AUTO_STATUS_SEEN: process.env.AUTO_STATUS_SEEN || "true",
 // make true or false status auto seen
@@ -45,9 +45,9 @@ OWNER_NUMBER: process.env.OWNER_NUMBER || "94762048412",
 // add your bot owner number
 OWNER_NAME: process.env.OWNER_NAME || "SHAGEE TᴇᴄʜX",
 // add bot owner name
-DESCRIPTION: process.env.DESCRIPTION || "ＳＨAG EＥ 🌑⚡ | ⛚ Sʜᴀɢᴇᴇ   BᴏᴛＺｚ ᴢ  ᴛᴇᴄʜ",
+DESCRIPTION: process.env.DESCRIPTION || "> ＳＨAG EＥ 🌑⚡ | ⛚ Sʜᴀɢᴇᴇ   BᴏᴛＺｚ ᴢ  ᴛᴇᴄʜ",
 // add bot owner name    
-ALIVE_IMG: process.env.ALIVE_IMG || "https://i.ibb.co/hRYYmh21/20250501-173316.jpg",
+ALIVE_IMG: process.env.ALIVE_IMG || "https://i.ibb.co/sdsy6LG6/3mfp-OTP7c1.jpg",
 // add img for alive msg
 LIVE_MSG: process.env.LIVE_MSG || "> I'm alive now *SHAGEE-MD*⚡",
 // add alive msg here 
