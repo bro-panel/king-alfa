@@ -69,19 +69,21 @@ const {
 const { File } = require("megajs")
 const fs = require("fs")
 
+if (!config.SESSION_ID) throw new Error("SESSION_ID missing")
+
 let sessdata = config.SESSION_ID.replace("S=", "")
 
-// If only ID#KEY given, prepend the full MEGA URL
 if (!sessdata.startsWith("http")) {
-   sessdata = "https://mega.nz/file/" + sessdata
+    sessdata = "https://mega.nz/file/" + sessdata
 }
 
 const file = File.fromURL(sessdata)
 
 file.download((err, data) => {
-   if (err) throw err
-   fs.writeFileSync(__dirname + "/sessions/creds.json", data)
-   console.log("Session downloaded ✅")
+    if (err) throw err
+    fs.mkdirSync(__dirname + "/sessions", { recursive: true })
+    fs.writeFileSync(__dirname + "/sessions/creds.json", data)
+    console.log("Session downloaded ✅")
 })
 
 
