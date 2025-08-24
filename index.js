@@ -65,8 +65,7 @@ const {
   // Clear the temp directory every 5 minutes
   setInterval(clearTempDir, 5 * 60 * 1000);
   
-  //===================SESSION-AUTH============================
-const fs = require("fs");
+  //===================SESSION-AUTH===========================
 const { File } = require("megajs");
 const express = require("express");
 const app = express();
