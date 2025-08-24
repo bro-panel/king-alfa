@@ -67,23 +67,48 @@ const {
   
   //===================SESSION-AUTH============================
 const { File } = require("megajs")
-if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
-  if (!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
-  const sessdata = config.SESSION_ID.replace("S=", '')
-  const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
-  filer.download((err, data) => {
-    if (err) throw err
-    fs.writeFile(__dirname + '/sessions/creds.json', data, () => {
-      console.log("[ 📥 ] Session downloaded ✅")
-    })
-  })
+const fs = require("fs");
+const { File } = require("megajs");
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 9090;
+
+// ensure sessions folder exists
+const sessionsDir = __dirname + "/sessions";
+if (!fs.existsSync(sessionsDir)) {
+  fs.mkdirSync(sessionsDir, { recursive: true });
 }
 
-const express = require("express")
-const app = express()
-const port = process.env.PORT || 9090
+// download session if not exists
+const credsPath = `${sessionsDir}/creds.json`;
+if (!fs.existsSync(credsPath)) {
+  if (!config.SESSION_ID) {
+    return console.log("Please add your session to SESSION_ID env !!");
+  }
 
-let conn // ✅ GLOBAL conn declaration
+  const sessdata = config.SESSION_ID.replace("SHAGEE~", "");
+  const megaLink = `https://mega.nz/file/${sessdata}`;
+
+  try {
+    const filer = File.fromURL(megaLink);
+    filer.download((err, data) => {
+      if (err) return console.error("Session download error:", err);
+      fs.writeFile(credsPath, data, (err) => {
+        if (err) return console.error("Failed to write session file:", err);
+        console.log("[ 📥 ] Session downloaded ✅");
+      });
+    });
+  } catch (err) {
+    console.error("Invalid Mega link or error:", err);
+  }
+}
+
+let conn; // ✅ GLOBAL conn declaration
+
+// start express server
+app.listen(port, () => {
+  console.log(`Server listening on http://localhost:${port}`);
+});
   //=============================================
   
   async function connectToWA() {
