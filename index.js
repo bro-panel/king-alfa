@@ -67,12 +67,19 @@ const {
   
   //===================SESSION-AUTH============================
 const { File } = require("megajs")
+const { File } = require("megajs")
 const fs = require("fs")
+
+// Define config object if not already
+const config = {
+    SESSION_ID: process.env.SESSION_ID // Or assign your SESSION_ID string here
+}
 
 if (!config.SESSION_ID) throw new Error("SESSION_ID missing")
 
 let sessdata = config.SESSION_ID.replace("S=", "")
 
+// Prepend full MEGA URL if only ID#KEY is provided
 if (!sessdata.startsWith("http")) {
     sessdata = "https://mega.nz/file/" + sessdata
 }
