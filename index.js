@@ -67,14 +67,17 @@ const {
   
   //===================SESSION-AUTH============================
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
-if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
-const sessdata = config.SESSION_ID.replace("S=", '');
-const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
-filer.download((err, data) => {
-if(err) throw err
-fs.writeFile(__dirname + '/sessions/creds.json', data, () => {
-console.log("Session downloaded ✅")
-})})}
+  if (!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
+
+  const sessdata = config.SESSION_ID.replace("S=", '');
+  const filer = File.fromURL(sessdata); // full mega link with hash
+  filer.download((err, data) => {
+    if (err) throw err;
+    fs.writeFile(__dirname + '/sessions/creds.json', data, () => {
+      console.log("Session downloaded ✅")
+    })
+  });
+}
 
 
 const express = require("express");
