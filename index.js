@@ -66,7 +66,6 @@ const {
   setInterval(clearTempDir, 5 * 60 * 1000);
   
   //===================SESSION-AUTH============================
-const { File } = require("megajs")
 const fs = require("fs");
 const { File } = require("megajs");
 const express = require("express");
