@@ -67,19 +67,17 @@ const {
   
   //===================SESSION-AUTH===========================
 const fs = require("fs");
-const { File } = require("megajs"); // එකම වරක් import කරන්න
+const { File } = require("megajs");
+const express = require("express");
+const app = express();
+const port = process.env.PORT || 9090;
 
-const config = {
-    SESSION_ID: process.env.SESSION_ID // Ensure SESSION_ID is set in env
-};
-
-// Session check & download
+// Mega session download
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
-    if (!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!');
+    if (!process.env.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!');
 
-    const sessdata = config.SESSION_ID.replace("S=", '');
+    const sessdata = process.env.SESSION_ID.replace("S=", '');
     const file = File.fromURL(`https://mega.nz/file/${sessdata}`);
-
     file.download((err, data) => {
         if (err) throw err;
         fs.writeFile(__dirname + '/sessions/creds.json', data, (err) => {
@@ -90,13 +88,7 @@ if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
 }
 
 // Express server
-const express = require("express");
-const app = express();
-const port = process.env.PORT || 9090;
-
-app.listen(port, () => {
-    console.log(`Server listening on http://localhost:${port}`);
-});
+app.listen(port, () => console.log(`Server listening on http://localhost:${port}`));
   //=============================================
   
   async function connectToWA() {
@@ -107,7 +99,7 @@ app.listen(port, () => {
   const conn = makeWASocket({
           logger: P({ level: 'silent' }),
           printQRInTerminal: false,
-          browser: Browsers.macOS("Firefox"),
+          browser: Browsers.macOS("safari"),
           syncFullHistory: true,
           auth: state,
           version
