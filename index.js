@@ -67,37 +67,23 @@ const {
   
   //===================SESSION-AUTH============================
 const { File } = require("megajs")
-const { File } = require("megajs")
-const fs = require("fs")
-
-// Define config object if not already
-const config = {
-    SESSION_ID: process.env.SESSION_ID // Or assign your SESSION_ID string here
-}
-
-if (!config.SESSION_ID) throw new Error("SESSION_ID missing")
-
-let sessdata = config.SESSION_ID.replace("S=", "")
-
-// Prepend full MEGA URL if only ID#KEY is provided
-if (!sessdata.startsWith("http")) {
-    sessdata = "https://mega.nz/file/" + sessdata
-}
-
-const file = File.fromURL(sessdata)
-
-file.download((err, data) => {
+if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
+  if (!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
+  const sessdata = config.SESSION_ID.replace("S=", '')
+  const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
+  filer.download((err, data) => {
     if (err) throw err
-    fs.mkdirSync(__dirname + "/sessions", { recursive: true })
-    fs.writeFileSync(__dirname + "/sessions/creds.json", data)
-    console.log("Session downloaded ✅")
-})
+    fs.writeFile(__dirname + '/sessions/creds.json', data, () => {
+      console.log("[ 📥 ] Session downloaded ✅")
+    })
+  })
+}
 
+const express = require("express")
+const app = express()
+const port = process.env.PORT || 9090
 
-const express = require("express");
-const app = express();
-const port = process.env.PORT || 9090;
-  
+let conn // ✅ GLOBAL conn declaration
   //=============================================
   
   async function connectToWA() {
