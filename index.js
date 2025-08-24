@@ -66,18 +66,23 @@ const {
   setInterval(clearTempDir, 5 * 60 * 1000);
   
   //===================SESSION-AUTH============================
-if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
-  if (!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
+const { File } = require("megajs")
+const fs = require("fs")
 
-  const sessdata = config.SESSION_ID.replace("S=", '');
-  const filer = File.fromURL(sessdata); // full mega link with hash
-  filer.download((err, data) => {
-    if (err) throw err;
-    fs.writeFile(__dirname + '/sessions/creds.json', data, () => {
-      console.log("Session downloaded ✅")
-    })
-  });
+let sessdata = config.SESSION_ID.replace("S=", "")
+
+// If only ID#KEY given, prepend the full MEGA URL
+if (!sessdata.startsWith("http")) {
+   sessdata = "https://mega.nz/file/" + sessdata
 }
+
+const file = File.fromURL(sessdata)
+
+file.download((err, data) => {
+   if (err) throw err
+   fs.writeFileSync(__dirname + "/sessions/creds.json", data)
+   console.log("Session downloaded ✅")
+})
 
 
 const express = require("express");
